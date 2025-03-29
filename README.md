@@ -1,6 +1,6 @@
 # DropPing
 
-Drop{ing is a location-based notification pushing mobile application designed for Android devices. It automatically detects when a user reaches important locations, such as a college or railway station, and sends SMS notifications to selected contacts. This project is a college assignment for testing with a small group of friends, with no plans for commercialization or app store deployment (as of yet).
+DropPing is a location-based notification pushing mobile application designed for Android devices. It automatically detects when a user reaches important locations, such as a college or railway station, and sends SMS notifications to selected contacts. This project is a college assignment for testing with a small group of friends, with no plans for commercialization or app store deployment (as of yet).
 
 ## 📱 Features
 - **Automatic Location Detection:** Uses GPS to detect when the user arrives at specific locations.
