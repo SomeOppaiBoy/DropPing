@@ -6,6 +6,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import android.util.Log;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
@@ -14,16 +18,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        requestContactsPermission();
         dbHelper = new DatabaseHelper(this);
-
-        // Add a test contact
+        dbHelper.syncContacts(this);
         long contactId = dbHelper.addContact("Alice", "1234567890");
 
-        // Add a test geofence
         long geofenceId = dbHelper.addGeofence("Home", 37.7749, -122.4194, 100.0f);
 
-        // Opt out, then opt back in (for testing)
         dbHelper.setOptStatus("1234567890", (int) geofenceId, "opted_out");
         dbHelper.setOptStatus("1234567890", (int) geofenceId, "opted_in");
 
@@ -40,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
             else if (position == 1) tab.setText("Contacts");
         }).attach();
 
+    }
+
+    private void requestContactsPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_CONTACTS}, 1);
+        }
     }
 
 }
