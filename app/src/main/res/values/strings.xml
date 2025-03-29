@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DropPing2</string>
+    <string name="locations_tab">Locations Tab</string>
+    <string name="contacts_tab">Contacts Tab</string>
+</resources>
