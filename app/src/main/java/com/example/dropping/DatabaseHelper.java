@@ -10,6 +10,8 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import java.util.List;
 import java.util.ArrayList;
+import android.telephony.SmsManager;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "DropPing.db";
@@ -160,5 +162,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return geofencesList;
+    }
+    public void sendNotification(String geofenceName, Context context) {
+        List<String[]> contacts = getAllContacts();
+        for (String[] contact : contacts) {
+            String phoneNumber = contact[1];
+            if (!isOptedOut(phoneNumber, getGeofenceId(geofenceName))) {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNumber, null,
+                        "Entered " + geofenceName + ". Opt out: [link]", null, null);
+                Log.d("SMS", "Sent to " + phoneNumber);
+            }
+        }
+    }
+
+    private int getGeofenceId(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM " + TABLE_GEOFENCES + " WHERE name = ?",
+                new String[]{name});
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            cursor.close();
+            return id;
+        }
+        cursor.close();
+        return -1;
+    }
+    public void logGeofences() {
+        List<String[]> geofences = getAllGeofences();
+        for (String[] g : geofences) {
+            Log.d("GeofenceCheck", "Name: " + g[0] + ", Lat: " + g[1] + ", Lon: " + g[2]);
+        }
     }
 }
