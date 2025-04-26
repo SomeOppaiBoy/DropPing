@@ -1,11 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/edit_text_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search contacts"
+        android:imeOptions="actionSearch"
+        android:inputType="text" />
+
+    <!-- Send All Updates Checkbox -->
+    <CheckBox
+        android:id="@+id/checkbox_send_all_updates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Send all updates (location-based)" />
+
+    <!-- Add Contact Button -->
+    <Button
+        android:id="@+id/btn_add_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Add Contact" />
+
+    <!-- RecyclerView for Contacts -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contactsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>
